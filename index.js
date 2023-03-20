@@ -27,7 +27,9 @@ app.get("/products", (req, res) => {
 		attributes: ["id", "name", "price", "seller", "imageUrl", "createdAt"],
 	})
 		.then((result) => {
-			console.log("product 조회결과:", result);
+			res.send({
+				product: result,
+			});
 		})
 		.catch((err) => {
 			console.error(err);
@@ -53,18 +55,10 @@ app.get("/products/:id", (req, res) => {
 		});
 });
 
-app.post("/image", upload.single("image"), (req, res) => {
-	const file = req.file;
-	console.log(file);
-	res.send({
-		imageUrl: file.path,
-	});
-});
 
-//상품생성데이터를  데이터베이스 추가
 app.post("/products", (req, res) => {
 	const body = req.body;
-	const { name, description, price, seller } = body;
+	const { name, imageUrl, description, price, seller } = body;
 	if (!name || !description || !price || !seller) {
 		res.send("모든 필드를 입력해주세요");
 	}
@@ -73,15 +67,20 @@ app.post("/products", (req, res) => {
 		description,
 		price,
 		seller,
+		imageUrl,
 	})
 		.then((result) => {
-			console.log("상품생성결과:", result);
 			res.send({ result });
 		})
 		.catch((error) => {
 			console.error(error);
-			//res.send("상품업로드에 문제가 발생했습니다");
 		});
+});
+app.post("/image", upload.single("image"), (req, res) => {
+	const file = req.file;
+	res.send({
+		imageUrl: file.path,
+	});
 });
 
 app.post("/login", (req, res) => {
