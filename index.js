@@ -4,7 +4,7 @@ const models = require("./models");
 const multer = require("multer");
 
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 const upload = multer({
 	storage: multer.diskStorage({
@@ -103,12 +103,12 @@ app.post("/purchase/:id", (req, res) => {
 	)
 		.then((result) => {
 			res.send({
-				result:true,
-			})
+				result: true,
+			});
 		})
 		.catch((error) => {
 			console.error(error);
-			res.status(500).send("에러가 발생했습니다")
+			res.status(500).send("에러가 발생했습니다");
 		});
 });
 
