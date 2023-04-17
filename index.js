@@ -122,6 +122,23 @@ app.post("/todos", (req, res) => {
 		console.error(error);
 	})
 });
+app.get("/todos", (req, res) => {
+	models.Todos.findAll({
+		order: [["createdAt", "DESC"]],
+		attributes: ["id", "subject", "complete", "createdAt"],
+	})
+		.then((result) => {
+			res.send({
+				todos: result,
+			});
+		})
+		.catch((err) => {
+			res.send("에러발생");
+		});
+
+
+
+});
 
 
 //api 요청->전달->응답
