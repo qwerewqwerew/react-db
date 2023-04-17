@@ -110,6 +110,20 @@ app.post("/products", (req, res) => {
 			console.error(error);
 		});
 });
+
+app.post("/todos", (req, res) => {
+	const body = req.body;
+	const { subject, complete } = body;
+	models.Todos.create({
+		subject, complete
+	}).then((result) => {
+		res.send({ result });
+	}).catch((error) => {
+		console.error(error);
+	})
+});
+
+
 //api 요청->전달->응답
 app.post("/purchase/:id", (req, res) => {
 	const { id } = req.params;
@@ -140,10 +154,6 @@ app.post("/image", upload.single("image"), (req, res) => {
 });
 
 
-
-app.post("/todos", (req, res) => {
-	res.send("로그인이 완료되었습니다");
-});
 
 
 
