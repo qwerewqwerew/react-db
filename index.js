@@ -139,9 +139,13 @@ app.post("/image", upload.single("image"), (req, res) => {
 	});
 });
 
-app.post("/login", (req, res) => {
+
+
+app.post("/todos", (req, res) => {
 	res.send("로그인이 완료되었습니다");
 });
+
+
 
 //app 실행
 app.listen(port, () => {
