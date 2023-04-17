@@ -52,11 +52,31 @@ app.get("/products", (req, res) => {
 		});
 });
 
-app.get("/products/:id", (req, res) => {
+app.get("/products/:category/:id", (req, res) => {
 	const params = req.params;
-	const { id } = params;
-	models.Product.findOne({
-		where: { id: id },
+	const { id, category } = params;
+	models.Product.findAll({
+		where: {
+			id: id,
+			category: category,
+		},
+	})
+		.then((result) => {
+			console.log("조회결과:", result);
+			res.send({
+				product: result,
+			});
+		})
+		.catch((error) => {
+			console.error(error);
+			res.send("상품조회시 에러가 발생했습니다");
+		});
+});
+app.get("/products/:category", (req, res) => {
+	const params = req.params;
+	const { category } = params;
+	models.Product.findAll({
+		where: { category: category },
 	})
 		.then((result) => {
 			console.log("조회결과:", result);

@@ -25,6 +25,10 @@ module.exports=(sequelize,DataTypes)=>{
       allowNull:false,
       defaultValue:0,
     },
+    category:{
+      type:DataTypes.STRING(50),
+      allowNull:true,
+    },
   })
   return product;
 }
